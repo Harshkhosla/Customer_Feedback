@@ -20,12 +20,11 @@ model User {
   email     String   @unique
   feedbacks Feedback[]
 }
-
 model Product {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  description String
-  feedbacks Feedback[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String? // Make it optional
+  feedbacks   Feedback[]
 }
 
 model Feedback {
@@ -33,9 +32,8 @@ model Feedback {
   userId    String   @db.ObjectId
   productId String   @db.ObjectId
   rating    Int
-  comment   String
+  comment   String?  // Make it optional if it's not always required
   createdAt DateTime @default(now()) @db.Timestamp
   user      User     @relation(fields: [userId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
 }
-

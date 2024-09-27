@@ -13,27 +13,31 @@ const express_1 = require("express");
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const FeedbackRouter = (0, express_1.Router)();
-// Submit feedback
-// FeedbackRouter.post('/', async (req: Request, res: Response) => {
-//     const { userId, productId, rating, comment } = req.body;
-//     if (!userId || !productId || !rating || !comment) {
-//       return res.status(400).json({ message: 'All fields are required' });
-//     }
-//     try {
-//       const newFeedback = await prisma.feedback.create({
-//         data: {
-//           userId,
-//           productId,
-//           rating,
-//           comment,
-//         },
-//       });
-//       return res.status(201).json(newFeedback);
-//     } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({ message: 'Error submitting feedback', error });
-//     }
-//   });
+const feedbackFeedbackRouter = (0, express_1.Router)();
+// Submit
+//  feedbackFeedbackRouter.post('/', async (req: Request, res: Response): Promise<Response | void> => {
+//   const { userId, productId, rating, comment } = req.body;
+//   // Logging the incoming request body for debugging
+//   console.log('Received data:', { userId, productId, rating, comment });
+//   if (!userId || !productId || !rating || !comment) {
+//     return res.status(400).json({ message: 'All fields are required' });
+//   }
+//   try {
+//     const newFeedback = await prisma.feedback.create({
+//       data: {
+//         userId,
+//         productId,
+//         rating,
+//         comment,
+//       },
+//     });
+//     console.log('New feedback created:', newFeedback); // Log success
+//     return res.status(201).json(newFeedback);
+//   } catch (error) {
+//     console.error('Error during feedback submission:', error); // Log error
+//     return res.status(500).json({ message: 'Error submitting feedback', error });
+//   }
+// });
 // Get feedback for a product
 FeedbackRouter.get('/product/:productId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { productId } = req.params;
@@ -48,6 +52,7 @@ FeedbackRouter.get('/product/:productId', (req, res) => __awaiter(void 0, void 0
         res.status(500).json({ message: 'Error retrieving feedback', error });
     }
 }));
+// Get feedback for a user
 FeedbackRouter.get('/user/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     try {
@@ -61,6 +66,7 @@ FeedbackRouter.get('/user/:userId', (req, res) => __awaiter(void 0, void 0, void
         res.status(500).json({ message: 'Error retrieving feedback', error });
     }
 }));
+// Calculate average rating for a product
 FeedbackRouter.get('/average/:productId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { productId } = req.params;
     try {
